@@ -1,7 +1,6 @@
 import { defineConfig } from 'vitepress'
 
 export default defineConfig({
-  base: '/docs',
   lang: 'zh-CN',
   title: "alterEgo Blog",
   description: "alterEgo 技术博客",
