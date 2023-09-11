@@ -42,7 +42,7 @@ configureWebpack: (config) => {
 };
 ```
 
-::: warning
+::: warning 注意
 terser-webpack-plugin 是@vue/cli-service 的依赖包之一，所以不需要再次安装；
 :::
 
