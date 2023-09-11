@@ -18,3 +18,4 @@ git commit -m 'add'
 git push -f git@github.com:jr-y-web/jr-y-web.github.io.gitmaster master:main
 
 cd -
+ 
