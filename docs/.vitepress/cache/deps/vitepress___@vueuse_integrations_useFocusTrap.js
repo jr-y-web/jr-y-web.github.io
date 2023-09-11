@@ -1,13 +1,13 @@
 import {
   tryOnScopeDispose,
   unrefElement
-} from "./chunk-KS6V7A6V.js";
+} from "./chunk-K4S6BG3P.js";
 import {
   ref,
   watch
-} from "./chunk-DJKME34S.js";
+} from "./chunk-4EKHRIZA.js";
 
-// ../../node_modules/tabbable/dist/index.esm.js
+// ../../node_modules/.pnpm/registry.npmmirror.com+tabbable@6.2.0/node_modules/tabbable/dist/index.esm.js
 var candidateSelectors = ["input:not([inert])", "select:not([inert])", "textarea:not([inert])", "a[href]:not([inert])", "button:not([inert])", "[tabindex]:not(slot):not([inert])", "audio[controls]:not([inert])", "video[controls]:not([inert])", '[contenteditable]:not([contenteditable="false"]):not([inert])', "details>summary:first-of-type:not([inert])", "details:not([inert])"];
 var candidateSelector = candidateSelectors.join(",");
 var NoElement = typeof Element === "undefined";
@@ -338,7 +338,7 @@ var isFocusable = function isFocusable2(node, options) {
   return isNodeMatchingSelectorFocusable(options, node);
 };
 
-// ../../node_modules/focus-trap/dist/focus-trap.esm.js
+// ../../node_modules/.pnpm/registry.npmmirror.com+focus-trap@7.5.2/node_modules/focus-trap/dist/focus-trap.esm.js
 function ownKeys(object, enumerableOnly) {
   var keys = Object.keys(object);
   if (Object.getOwnPropertySymbols) {
@@ -1010,41 +1010,10 @@ var createFocusTrap = function createFocusTrap2(elements, userOptions) {
   return trap;
 };
 
-// ../../node_modules/@vueuse/integrations/useFocusTrap.mjs
-var __defProp = Object.defineProperty;
-var __defProps = Object.defineProperties;
-var __getOwnPropDescs = Object.getOwnPropertyDescriptors;
-var __getOwnPropSymbols = Object.getOwnPropertySymbols;
-var __hasOwnProp = Object.prototype.hasOwnProperty;
-var __propIsEnum = Object.prototype.propertyIsEnumerable;
-var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-var __spreadValues = (a, b) => {
-  for (var prop in b || (b = {}))
-    if (__hasOwnProp.call(b, prop))
-      __defNormalProp(a, prop, b[prop]);
-  if (__getOwnPropSymbols)
-    for (var prop of __getOwnPropSymbols(b)) {
-      if (__propIsEnum.call(b, prop))
-        __defNormalProp(a, prop, b[prop]);
-    }
-  return a;
-};
-var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
-var __objRest = (source, exclude) => {
-  var target = {};
-  for (var prop in source)
-    if (__hasOwnProp.call(source, prop) && exclude.indexOf(prop) < 0)
-      target[prop] = source[prop];
-  if (source != null && __getOwnPropSymbols)
-    for (var prop of __getOwnPropSymbols(source)) {
-      if (exclude.indexOf(prop) < 0 && __propIsEnum.call(source, prop))
-        target[prop] = source[prop];
-    }
-  return target;
-};
+// ../../node_modules/.pnpm/registry.npmmirror.com+@vueuse+integrations@10.4.1_focus-trap@7.5.2_vue@3.3.4/node_modules/@vueuse/integrations/useFocusTrap.mjs
 function useFocusTrap(target, options = {}) {
   let trap;
-  const _a = options, { immediate } = _a, focusTrapOptions = __objRest(_a, ["immediate"]);
+  const { immediate, ...focusTrapOptions } = options;
   const hasFocus = ref(false);
   const isPaused = ref(false);
   const activate = (opts) => trap && trap.activate(opts);
@@ -1066,7 +1035,8 @@ function useFocusTrap(target, options = {}) {
     (el) => {
       if (!el)
         return;
-      trap = createFocusTrap(el, __spreadProps(__spreadValues({}, focusTrapOptions), {
+      trap = createFocusTrap(el, {
+        ...focusTrapOptions,
         onActivate() {
           hasFocus.value = true;
           if (options.onActivate)
@@ -1077,7 +1047,7 @@ function useFocusTrap(target, options = {}) {
           if (options.onDeactivate)
             options.onDeactivate();
         }
-      }));
+      });
       if (immediate)
         activate();
     },

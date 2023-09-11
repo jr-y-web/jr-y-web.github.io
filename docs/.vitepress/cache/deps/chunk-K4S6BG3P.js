@@ -7,9 +7,9 @@ import {
   ref,
   unref,
   watchEffect
-} from "./chunk-DJKME34S.js";
+} from "./chunk-4EKHRIZA.js";
 
-// ../../node_modules/@vueuse/shared/index.mjs
+// ../../node_modules/.pnpm/registry.npmmirror.com+@vueuse+shared@10.4.1_vue@3.3.4/node_modules/@vueuse/shared/index.mjs
 function tryOnScopeDispose(fn) {
   if (getCurrentScope()) {
     onScopeDispose(fn);
@@ -20,7 +20,7 @@ function tryOnScopeDispose(fn) {
 function toValue(r) {
   return typeof r === "function" ? r() : unref(r);
 }
-var isClient = typeof window !== "undefined";
+var isClient = typeof window !== "undefined" && typeof document !== "undefined";
 var isIOS = getIsIOS();
 function getIsIOS() {
   var _a;
@@ -45,7 +45,7 @@ function identity(arg) {
   return arg;
 }
 
-// ../../node_modules/@vueuse/core/index.mjs
+// ../../node_modules/.pnpm/registry.npmmirror.com+@vueuse+core@10.4.1_vue@3.3.4/node_modules/@vueuse/core/index.mjs
 function unrefElement(elRef) {
   var _a;
   const plain = toValue(elRef);
@@ -168,4 +168,4 @@ export {
   unrefElement,
   useMediaQuery
 };
-//# sourceMappingURL=chunk-KS6V7A6V.js.map
+//# sourceMappingURL=chunk-K4S6BG3P.js.map
