@@ -3,7 +3,7 @@ import { sidebar, nav } from './router'
 
 export default defineConfig({
   lang: 'zh-CN',
-  title: "岚晴雪",
+  title: "吹岚晴雪",
   description: "alterEgo 技术博客",
   // lastUpdated: true,
   themeConfig: {
