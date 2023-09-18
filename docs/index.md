@@ -6,7 +6,7 @@ hero:
   text: "记录工作和学习中遇到的问题和get到的技能"
   tagline: 外包前端真实悲惨经历
   image:
-    src: "/assets/logo.png"
+    src: "../blogLogo.png"
     alt: "logo"
   actions:
     - theme: brand

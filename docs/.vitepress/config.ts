@@ -7,7 +7,7 @@ export default defineConfig({
   description: "alterEgo 技术博客",
   // lastUpdated: true,
   themeConfig: {
-    logo: '../assets/blogLogo.png',
+    logo: '../blogLogo.png',
     outlineTitle: '本页目录',
     nav,
     sidebar,
