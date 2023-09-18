@@ -2,9 +2,12 @@
 layout: home
 
 hero:
-  name: "alterEgo 技术博客"
-  text: "记录工作和学习中遇到的问题以及get到的技能"
+  name: "岚晴雪"
+  text: "记录工作和学习中遇到的问题和get到的技能"
   tagline: 外包前端真实悲惨经历
+  image:
+    src: "/assets/logo.png"
+    alt: "logo"
   actions:
     - theme: brand
       text: 进入笔记

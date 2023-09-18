@@ -3,10 +3,11 @@ import { sidebar, nav } from './router'
 
 export default defineConfig({
   lang: 'zh-CN',
-  title: "alterEgo Blog",
+  title: "岚晴雪",
   description: "alterEgo 技术博客",
   // lastUpdated: true,
   themeConfig: {
+    logo: '../assets/blogLogo.png',
     outlineTitle: '本页目录',
     nav,
     sidebar,
