@@ -2,7 +2,7 @@
 layout: home
 
 hero:
-  name: "吹岚晴雪"
+  name: "zerone log"
   text: "记录工作和学习中遇到的问题和get到的技能"
   tagline: 外包前端真实悲惨经历
   image:

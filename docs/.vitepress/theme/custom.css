@@ -1,7 +1,31 @@
 :root {
+  
     --vp-home-hero-name-color: transparent;
     --vp-home-hero-name-background: -webkit-linear-gradient(120deg,   #ed9e38, #2457f1);
     --vp-home-hero-image-background-image: linear-gradient(-45deg, #ed9e38 50%, #2457f1 50%);
     --vp-home-hero-image-filter: blur(72px);
+    --vp-c-r-yellow: #f93;
+    --vp-c-r-blue: #708fff;
+    --vp-c-r-red: #f43f5e;
+
+    .custom-block.warning {
+      background: transparent;
+      border-color:  var(--vp-c-r-yellow);
+      color: var(--vp-c-r-yellow);
+    }
+
+    .custom-block.tip {
+      background: transparent;
+      border-color:  var(--vp-c-r-blue);
+      color:  var(--vp-c-r-blue);
+    }
+ 
+    .custom-block.danger {
+      background: transparent;
+      border-color:  var(--vp-c-r-red);
+      color: var(--vp-c-r-red);
+    }
+
+
   }
 

@@ -29,9 +29,11 @@ export const nodejs: Array<TypeRouter> = [
         ]
     },
     {
-        text: '核心模块',
+        text: '内置模块',
         items: [
-            { text: 'path', link: '/serve/nodejs/path.md' }
+            { text: 'path', link: '/serve/nodejs/path.md' },
+            { text: 'os', link: '/serve/nodejs/os.md' },
+            { text: 'process', link: '/serve/nodejs/process.md' }
         ]
     }
 ]
