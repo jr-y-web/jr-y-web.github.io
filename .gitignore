@@ -1,3 +1,4 @@
 /docs/.vitepress/dist
 node_modules
 yarn-error.log
+ce.js

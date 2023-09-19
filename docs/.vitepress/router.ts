@@ -33,7 +33,8 @@ export const nodejs: Array<TypeRouter> = [
         items: [
             { text: 'path', link: '/serve/nodejs/path.md' },
             { text: 'os', link: '/serve/nodejs/os.md' },
-            { text: 'process', link: '/serve/nodejs/process.md' }
+            { text: 'process', link: '/serve/nodejs/process.md' },
+            { text: 'child_process', link: '/serve/nodejs/child_process.md' }
         ]
     }
 ]
