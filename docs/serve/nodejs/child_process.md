@@ -139,3 +139,61 @@ const { stdout } = spawn("netstat", "-v", options);
 :::
 
 ## execFile && execFileSync
+
+`execFile`与`execFileSync` 都是执行指定的可执行文件的`file`直接作为新进程衍生，使其比`exec`与`execSync`略有效率。简单的说，`execFile`与`execFileSync` 就是处理`shell`命令文件的 Api。
+
+### execFile
+
+```js
+execFile(file[, args][, options][, callback])
+```
+
+用法还是和普通的`exec`类似，举个例子，假设现在项目根目录有`file.sh`文件。
+
+```js
+execFile("/file.sh", (err, stdout, stderr) => {
+  if (err) return;
+  console.log(stdout.toString());
+})``;
+```
+
+### execFileSync
+
+```js
+execFileSync(file[, args][, options])
+```
+
+同步模式就也与普通的`execSync`类似，还是假设现在项目根目录有`file.sh`文件。
+
+```js
+const { stdout } = execFileSync("/file.sh");
+console.log(stdout.toString());
+```
+
+## fork
+
+```js
+fork(modulePath[, args][, options])
+```
+
+`fork`是创建一个**只执行 js**的 Nodejs 子进程，专门用于衍生新的 Node.js 进程。 与 child_process.spawn() 一样，返回 ChildProcess 对象。 返回的 ChildProcess 将有额外的内置通信通道，允许消息在父进程和子进程之间来回传递。 详见 subprocess.send()。衍生的 Node.js 子进程独立于父进程，除了两者之间建立的 IPC 通信通道。 每个进程都有自己的内存，具有自己的 V8 实例。 由于需要额外的资源分配，不建议衍生大量子 Node.js 进程。 简单的说，它可以实现父进程向子进程通信，或者子向父通信,同时执行子进程内的程序。
+
+举个例子，现在假设有父进程 a，子进程 b;
+
+```js
+// 父进程 a.js
+const result = fork("/b.js");
+
+result.send("我是父进程"); // 向子进程通信
+
+// 子进程 b.js
+result.on("message", (mes) => {
+  console.log("子进程收到消息");
+});
+```
+
+当然的，也可以子进程，启用`send`事件向父进程通信。
+
+## 更多 Api
+
+子进程这块还是很庞大，更多 api 还是需要找到[官方文档](http://www.nodejs.com.cn/api/child_process.html)
