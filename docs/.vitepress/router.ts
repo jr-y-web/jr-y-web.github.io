@@ -41,7 +41,8 @@ export const nodejs: Array<TypeRouter> = [
 
 // nest.js
 export const nestjs: Array<TypeRouter> = [
-    { text: 'Nest.js 环境变量配置', link: '/serve/nestjs/env.md' }
+    { text: 'Nest.js 环境变量配置', link: '/serve/nestjs/env.md' },
+    { text: 'Nest.js 连接数据库', link: '/serve/nestjs/nestSql.md' }
 ]
 
 // vue.js
