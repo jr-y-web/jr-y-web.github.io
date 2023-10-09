@@ -56,6 +56,11 @@ export const webSkill: Array<TypeRouter> = [
     { text: 'Css has选择器', link: '/web/skill/cssHas.md' }
 ]
 
+// games
+export const games: Array<TypeRouter> = [
+    { text: '赛博朋克2077 - 往日之影', link: '/interest/games/cyberpunk.md' }
+]
+
 // about
 export const about: Array<TypeRouter> = [
     {
@@ -100,6 +105,10 @@ const navItem = {
     interview: {
         router: interview,
         text: '面试题挑战'
+    },
+    games: {
+        router: games,
+        text: '游戏'
     }
 }
 
@@ -161,6 +170,12 @@ export const nav = [
         ]
     },
     {
+        text: '兴趣分享',
+        items: [
+            ...getNavOneRouter('games')
+        ]
+    },
+    {
         text: '面试题挑战',
         link: '/interview/202309.md'
     },
@@ -179,5 +194,7 @@ export const sidebar = {
     // 装b | 吹水
     '/about/': about,
     // 面试题
-    '/interview/': interview
+    '/interview/': interview,
+    // 兴趣分享 游戏
+    '/interest/games': games
 }
