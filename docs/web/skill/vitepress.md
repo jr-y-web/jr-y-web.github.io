@@ -34,7 +34,7 @@ npx vitepress init
 5. `Use TypeScript for config and theme files?` 对配置文件和主题文件使用 TypeScript？ 推荐为 Yes，ts 简直不要太方便。
 6. `Add VitePress npm scripts to package.json?` 是否将 VitePress npm 脚本添加到 package.json? Yes
 
-![流程](../../../../assets/webSkill/vitepressliucheng.png)
+![流程](../../assets/webSkill/vitepressliucheng.png)
 
 然后进入到项目，找到`package.json`添加上`name`与`vitepress`包，后续`github Actions` 会使用，同时`cnpm i`全局安装依赖。
 
