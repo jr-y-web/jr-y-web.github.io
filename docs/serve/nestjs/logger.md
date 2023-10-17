@@ -235,7 +235,7 @@ import {
   HttpException,
 } from "@nestjs/common";
 
-@Catch(HttpException)
+@Catch()
 export class HttpExceptionFiltern implements ExceptionFilter {
   catch(exception: HttpException, host: ArgumentsHost) {}
 }
@@ -254,7 +254,7 @@ import {
     LoggerService,
 } from '@nestjs/common';
 
-@Catch(HttpException)
+@Catch()
 export class HttpExceptionFiltern implements ExceptionFilter {
     constructor(private logger: LoggerService) { }   // 注入looger
     catch(exception: HttpException, host: ArgumentsHost) {
@@ -286,61 +286,170 @@ export class HttpExceptionFiltern implements ExceptionFilter {
 app.useGlobalFilters(new HttpExceptionFiltern(logger));
 ```
 
-### 完成代码：
+## 模块化日志系统
+
+上述完成后，基本上就可以输出本地日志和使用 winston 做为日志的打印。但这多少会让代码显得杂乱，并且当前还少了环境变量的配置（比如 dev 开发环境不需要记录 error 的错误日志），`Nest`提供了丰富的模块化系统，所以将就把日志重构改为模块化，同时接入环境变量来控制日志输出的配置；
+
+快速通过`nest-cli`创建一个日志模块;
 
 ```js
+nest g mo logs
+```
 
-import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
+去到`logs.moduel.ts`中，使用异步注册的方式创建`winston`日志（因为我们需要借助当前环境变量设置不同的日志模式），
+
+```js
+// log.module.ts
+import { Module } from '@nestjs/common';
+import { LogsController } from './logs.controller';
+import { LogsService } from './logs.service';
+import { WinstonModule, WinstonModuleOptions, utilities } from 'nest-winston';
+import { ConfigService } from '@nestjs/config';
 import * as winston from 'winston';
-import { utilities, WinstonModule } from 'nest-winston';
-import 'winston-daily-rotate-file';
-import { HttpExceptionFiltern } from './filters/http-exception.filter';
+import { Console } from 'winston/lib/winston/transports';
+import { logEmum } from 'src/emum/config.emum';
+import DailyRotateFile = require('winston-daily-rotate-file');
 
-declare const module: any;
+@Module({
+    imports: [
+        WinstonModule.forRootAsync({
+            inject: [ConfigService],
+            useFactory: async (configService: ConfigService) => {
+                const consoleTransPorts = new Console({
+                    level: 'info',
+                    format: winston.format.combine(
+                        winston.format.timestamp(),
+                        utilities.format.nestLike(),
+                    ),
+                });
+                const dailyailyRotateFileError = new DailyRotateFile({
+                    dirname: process.cwd() + '/logs',
+                    filename: 'Err_alterEgo_log-%DATE%.log',
+                    datePattern: 'YYYY-MM-DD',
+                    zippedArchive: true,
+                    maxSize: '20m',
+                    maxFiles: '7d',
+                    level: 'warn',
+                    format: winston.format.combine(
+                        winston.format.timestamp(),
+                        winston.format.simple(),
+                    ),
+                });
 
-async function bootstrap() {
-    //配置winston
-    const instance = winston.createLogger({
-        transports: [
-            new winston.transports.Console({
-                format: winston.format.combine(
-                    winston.format.timestamp(),
-                    utilities.format.nestLike(),
-                ),
-            }),
-            new winston.transports.DailyRotateFile({
-                dirname: process.cwd() + '/logs', // 文件到哪个目录
-                filename: 'Err_alterEgo_log-%DATE%.log', // 输出日志文件名
-                datePattern: 'YYYY-MM-DD',
-                zippedArchive: true, // 是否压缩
-                maxSize: '20m',
-                maxFiles: '7d',
-                level: 'error',
-                format: winston.format.combine(
-                    winston.format.timestamp(),
-                    winston.format.simple(),
-                ),
-            }),
-        ],
-    });
+                const dailyailyRotateFileInfo = new DailyRotateFile({
+                    dirname: process.cwd() + '/logs', // 文件到哪个目录
+                    filename: 'Err_alterEgo_log-%DATE%.log', // 输出日志文件名
+                    datePattern: 'YYYY-MM-DD',
+                    zippedArchive: true, // 是否压缩
+                    maxSize: '20m',
+                    maxFiles: '7d',
+                    level: 'info',
+                    format: winston.format.combine(
+                        winston.format.timestamp(),
+                        winston.format.simple(),
+                    ),
+                });
 
-    const logger = WinstonModule.createLogger({
-        instance,
-    });
-    const app = await NestFactory.create(AppModule, {
-        logger,
-    });
-    app.useGlobalFilters(new HttpExceptionFiltern(logger));
-    app.setGlobalPrefix('api');
+                return {
+                    transports: [
+                        consoleTransPorts,
+                        ...(configService.get(logEmum.NOT_LOG)
+                            ? []
+                            : [
+                                dailyailyRotateFileError,
+                                dailyailyRotateFileInfo,
+                            ]),
+                    ],
+                } as WinstonModuleOptions;
+            },
+        }),
+    ],
+    controllers: [LogsController],
+    providers: [LogsService],
+})
+export class LogsModule { }
 
-    await app.listen(3001);
 
-    if (module.hot) {
-        module.hot.accept();
-        module.hot.dispose(() => app.close());
+```
+
+另外的，这里额外在环境变量中新增了`NOT_LOG`，依旧和之前采用`TypeOrm`方式通过枚举在`configServer`中获取，ok 删掉之前在`main.ts`配置的东西，然后需要在`app.module.ts`中引入当前模块，最后采用`nest-winston`文档中替换当前项目`logger`的命令，回到`main.ts`；
+
+```js
+// main.ts
+import { WINSTON_MODULE_NEST_PROVIDER } from "nest-winston";
+
+app.useLogger(app.get(WINSTON_MODULE_NEST_PROVIDER));
+```
+
+那么`nest`是采取依赖注入的形式，如何使用这个被替换的`logger`呢，既然是依赖注入，那么只需要在想使用的地方的`构造器`中`Inject`上即可，举个例子：
+
+```js
+import {
+    Controller,
+    Delete,
+    Get,
+    Post,
+    Query,
+    Inject,
+    LoggerService,
+} from '@nestjs/common';
+import { UserService } from './user.service';
+import { User } from './user.entity';
+import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
+
+@Controller('user')
+export class UserController {
+    constructor(
+        private userService: UserService,
+        @Inject(WINSTON_MODULE_NEST_PROVIDER)
+        private readonly logger: LoggerService,
+    ) {
+        this.logger.log('user model init end');   // 这样logger就会被打印出来，同时会触发记录
     }
 }
-bootstrap();
+```
+
+同理，上述搓的全局异常拦截器也如此：
+
+```js
+import {
+    ArgumentsHost,
+    Catch,
+    ExceptionFilter,
+    HttpException,
+    Inject,
+    LoggerService,
+} from '@nestjs/common';
+import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
+
+@Catch()
+export class HttpExceptionFiltern implements ExceptionFilter {
+    constructor(
+        @Inject(WINSTON_MODULE_NEST_PROVIDER)
+        private readonly logger: LoggerService,
+    ) { }
+    catch(exception: HttpException, host: ArgumentsHost) {
+        const ctx = host.switchToHttp();
+        const response = ctx.getResponse();
+        const request = ctx.getRequest();
+        const status = exception.getStatus();
+        const massage = exception.message;
+
+        this.logger.error("['error']", {
+            code: status,
+            timestamp: new Date().toISOString(),
+            path: request.url,
+            massage,
+        });
+
+        response.status(status).json({
+            code: status,
+            timestamp: new Date().toISOString(),
+            path: request.url,
+            massage,
+        });
+    }
+}
+
 
 ```

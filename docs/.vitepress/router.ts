@@ -54,7 +54,8 @@ export const vuejs: Array<TypeRouter> = [
 // webSkill  
 export const webSkill: Array<TypeRouter> = [
     { text: 'visibilitystate 检测页面是否处于焦点状态', link: '/web/skill/visibilitystate.md' },
-    { text: 'Css has选择器', link: '/web/skill/cssHas.md' }
+    { text: 'Css has选择器', link: '/web/skill/cssHas.md' },
+    { text: '手摸手 带你入门且部署VitePress', link: '/web/skill/vitepress.md' }
 ]
 
 // games
