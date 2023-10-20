@@ -81,6 +81,18 @@ export const interview: Array<TypeRouter> = [
     { text: '2023-09', link: '/interview/202309.md' }
 ]
 
+// docs vueTestUtile
+export const vueTestUtile: Array<TypeRouter> = [
+    { text: '前言', link: '/docsTranslate/vueTestUtile/preface.md' },
+    { text: '安装', link: '/docsTranslate/vueTestUtile/Installation.md' },
+    {
+        text: '基础', items: [
+            { text: '概述', link: '/docsTranslate/vueTestUtile/gettingStarted' },
+            { text: '快速入门', link: '/docsTranslate/vueTestUtile/ACrashCourse.md' }
+        ]
+    }
+]
+
 
 // 汇总字典 （config.nav使用）
 const navItem = {
@@ -111,7 +123,12 @@ const navItem = {
     games: {
         router: games,
         text: '游戏'
+    },
+    vueTestUtile: {
+        router: vueTestUtile,
+        text: 'Vue Test Utils'
     }
+
 }
 
 
@@ -181,7 +198,13 @@ export const nav = [
         text: '面试题挑战',
         link: '/interview/202309.md'
     },
-    { text: '关于我', link: '/about/me.md' }
+    // { text: '关于我', link: '/about/me.md' }
+    {
+        text: '文档翻译',
+        items: [
+            ...getNavOneRouter('vueTestUtile')
+        ]
+    }
 ]
 
 export const sidebar = {
@@ -198,5 +221,7 @@ export const sidebar = {
     // 面试题
     '/interview/': interview,
     // 兴趣分享 游戏
-    '/interest/games': games
+    '/interest/games': games,
+    // vue test utile 翻译
+    '/docsTranslate/vueTestUtile': vueTestUtile
 }
