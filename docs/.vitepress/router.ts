@@ -12,15 +12,17 @@ interface TypeRouter {
     docFooterText?: string
     rel?: string
     target?: string
+    activeMatch?: string
 }
 
 // node.js
 export const nodejs: Array<TypeRouter> = [
     {
-        text: '基础性知识', items: [
+        text: '基础性知识',
+        items: [
             { text: '概述', link: '/serve/nodejs/index.md' },
             { text: 'npm install 原理', link: '/serve/nodejs/install.md' },
-            { text: 'npm run 原理', link: '/serve/nodejs/run.md' },
+            { text: 'npm run 原理', link: '/serve/nodejs/run.md', activeMatch: '/serve/nodejs/' },
             { text: 'npx 作用', link: '/serve/nodejs/npx.md' },
             {
                 text: '模块化',
@@ -88,7 +90,8 @@ export const vueTestUtile: Array<TypeRouter> = [
     {
         text: '基础', items: [
             { text: '概述', link: '/docsTranslate/vueTestUtile/gettingStarted' },
-            { text: '快速入门', link: '/docsTranslate/vueTestUtile/ACrashCourse.md' }
+            { text: '快速入门', link: '/docsTranslate/vueTestUtile/ACrashCourse.md' },
+            { text: '条件呈现', link: '/docsTranslate/vueTestUtile/conditionalRendering.md' }
         ]
     }
 ]
@@ -180,19 +183,22 @@ export const nav = [
         text: '前端开发',
         items: [
             ...getNavOneRouter('vuejs', 'webSkill')
-        ]
+        ],
+        activeMatch: '/web/'
     },
     {
         text: '后端开发',
         items: [
             ...getNavOneRouter('nodejs', 'nestjs')
-        ]
+        ],
+        activeMatch: '/serve/'
     },
     {
         text: '兴趣分享',
         items: [
             ...getNavOneRouter('games')
-        ]
+        ],
+        activeMatch: '/interest/'
     },
     {
         text: '面试题挑战',
@@ -203,7 +209,8 @@ export const nav = [
         text: '文档翻译',
         items: [
             ...getNavOneRouter('vueTestUtile')
-        ]
+        ],
+        activeMatch: '/docsTranslate/'
     }
 ]
 
