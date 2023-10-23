@@ -24,10 +24,7 @@ export const nodejs: Array<TypeRouter> = [
             { text: 'npm install 原理', link: '/serve/nodejs/install.md' },
             { text: 'npm run 原理', link: '/serve/nodejs/run.md', activeMatch: '/serve/nodejs/' },
             { text: 'npx 作用', link: '/serve/nodejs/npx.md' },
-            {
-                text: '模块化',
-                link: '/serve/nodejs/modularity.md'
-            },
+            { text: '模块化', link: '/serve/nodejs/modularity.md' },
         ]
     },
     {
@@ -91,7 +88,8 @@ export const vueTestUtile: Array<TypeRouter> = [
         text: '基础', items: [
             { text: '概述', link: '/docsTranslate/vueTestUtile/gettingStarted' },
             { text: '快速入门', link: '/docsTranslate/vueTestUtile/ACrashCourse.md' },
-            { text: '条件呈现', link: '/docsTranslate/vueTestUtile/conditionalRendering.md' }
+            { text: '条件呈现', link: '/docsTranslate/vueTestUtile/conditionalRendering.md' },
+            { text: '事件处理', link: '/docsTranslate/vueTestUtile/eventHandling.md' }
         ]
     }
 ]
