@@ -82,7 +82,6 @@ export const interview: Array<TypeRouter> = [
 
 // docs vueTestUtile
 export const vueTestUtile: Array<TypeRouter> = [
-    { text: '前言', link: '/docsTranslate/vueTestUtile/preface.md' },
     { text: '安装', link: '/docsTranslate/vueTestUtile/Installation.md' },
     {
         text: '基础', items: [
