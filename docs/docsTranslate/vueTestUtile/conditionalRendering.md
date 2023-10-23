@@ -119,7 +119,7 @@ const Nav = {
 
 在这种情况下，元素不可见，但始终呈现。`get()`或`find()`将始终返回一个`Wrapper()`–`find()`with`.exists()`始终返回`true`,因为元素仍在 DOM 中。
 
-## 使用 d `isVisiBle()`
+## 使用 `isVisiBle()`
 
 `isVisible()`提供了检查隐藏元素的能力。特别是`isVisible()`将检查是否：
 

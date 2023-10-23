@@ -9,6 +9,7 @@ export default defineConfig({
   themeConfig: {
     logo: '../blogLogo.png',
     outlineTitle: '本页目录',
+    outline: [2, 4],
     nav,
     sidebar,
 

@@ -89,7 +89,8 @@ export const vueTestUtile: Array<TypeRouter> = [
             { text: '概述', link: '/docsTranslate/vueTestUtile/gettingStarted' },
             { text: '快速入门', link: '/docsTranslate/vueTestUtile/ACrashCourse.md' },
             { text: '条件呈现', link: '/docsTranslate/vueTestUtile/conditionalRendering.md' },
-            { text: '事件处理', link: '/docsTranslate/vueTestUtile/eventHandling.md' }
+            { text: '事件处理', link: '/docsTranslate/vueTestUtile/eventHandling.md' },
+            { text: '表单交互', link: '/docsTranslate/vueTestUtile/formHandling.md' }
         ]
     }
 ]
