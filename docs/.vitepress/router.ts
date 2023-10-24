@@ -84,16 +84,25 @@ export const interview: Array<TypeRouter> = [
 export const vueTestUtile: Array<TypeRouter> = [
     { text: '安装', link: '/docsTranslate/vueTestUtile/Installation.md' },
     {
-        text: '基础', items: [
-            { text: '概述', link: '/docsTranslate/vueTestUtile/gettingStarted' },
+        text: '基础',
+        items: [
+            { text: '概述', link: '/docsTranslate/vueTestUtile/gettingStarted.md' },
             { text: '快速入门', link: '/docsTranslate/vueTestUtile/ACrashCourse.md' },
             { text: '条件呈现', link: '/docsTranslate/vueTestUtile/conditionalRendering.md' },
             { text: '事件处理', link: '/docsTranslate/vueTestUtile/eventHandling.md' },
-            { text: '表单交互', link: '/docsTranslate/vueTestUtile/formHandling.md' }
+            { text: '表单交互', link: '/docsTranslate/vueTestUtile/formHandling.md' },
+            { text: '向组件传递数据', link: '/docsTranslate/vueTestUtile/passingDataToComponents.md' },
+            { text: '编写易于测试的组件', link: '/docsTranslate/vueTestUtile/easyToTest.md' }
+
+        ]
+    },
+    {
+        text: '深入 Vue-Test-Utils',
+        items: [
+            { text: 'Slots', link: '/docsTranslate/vueTestUtile/slots.md' }
         ]
     }
 ]
-
 
 // 汇总字典 （config.nav使用）
 const navItem = {

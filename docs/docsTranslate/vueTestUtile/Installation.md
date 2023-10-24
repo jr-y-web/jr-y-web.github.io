@@ -4,7 +4,7 @@
 >
 > 官方文档： https://test-utils.vuejs.org/installation/
 
-# 安装
+## 安装
 
 ```bash
 npm install --save-dev @vue/test-utils
