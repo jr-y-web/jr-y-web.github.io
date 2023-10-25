@@ -99,7 +99,8 @@ export const vueTestUtile: Array<TypeRouter> = [
     {
         text: '深入 Vue-Test-Utils',
         items: [
-            { text: 'Slots', link: '/docsTranslate/vueTestUtile/slots.md' }
+            { text: '插槽(Slots)', link: '/docsTranslate/vueTestUtile/slots.md' },
+            { text: '异步行为', link: '/docsTranslate/vueTestUtile/asynchronous.md' }
         ]
     }
 ]
