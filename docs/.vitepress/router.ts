@@ -107,7 +107,8 @@ export const vueTestUtile: Array<TypeRouter> = [
             { text: '组件实例', link: '/docsTranslate/vueTestUtile/componentInstance.md' },
             { text: '可重复性和组合', link: '/docsTranslate/vueTestUtile/reusabilityCompositionre.md' },
             { text: '测试 v-model', link: '/docsTranslate/vueTestUtile/vModel.md' },
-            { text: '测试 vuex', link: '/docsTranslate/vueTestUtile/vuex.md' }
+            { text: '测试 vuex', link: '/docsTranslate/vueTestUtile/vuex.md' },
+            { text: '测试 vue router', link: '/docsTranslate/vueTestUtile/vRouter.md' }
         ]
     }
 ]
