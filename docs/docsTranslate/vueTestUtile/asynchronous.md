@@ -129,7 +129,7 @@ test("Async component", async () => {
 });
 ```
 
-::: warn 注意
+::: warning 注意
 若要访问`Async`组件的底层 vm 实例，请使用`wrapper.findComponent（Async）`的返回值。由于在这种情况下定义并安装了新组件，因此`mount（TestComponent）`返回的包装器包含其自己的（空）`vm`。
 :::
 

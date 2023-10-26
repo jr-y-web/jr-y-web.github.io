@@ -4,7 +4,7 @@ layout: home
 hero:
   name: "zerone log"
   text: "记录工作和学习中遇到的问题和get到的技能"
-  tagline: 外包前端真实悲惨经历
+  tagline: 这世界一切的不顺利，都是当事人能力不足
   image:
     src: "../blogLogo.png"
     alt: "logo"

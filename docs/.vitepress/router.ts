@@ -92,7 +92,8 @@ export const vueTestUtile: Array<TypeRouter> = [
             { text: '事件处理', link: '/docsTranslate/vueTestUtile/eventHandling.md' },
             { text: '表单交互', link: '/docsTranslate/vueTestUtile/formHandling.md' },
             { text: '向组件传递数据', link: '/docsTranslate/vueTestUtile/passingDataToComponents.md' },
-            { text: '编写易于测试的组件', link: '/docsTranslate/vueTestUtile/easyToTest.md' }
+            { text: '编写易于测试的组件', link: '/docsTranslate/vueTestUtile/easyToTest.md' },
+            { text: '发送HTTP请求', link: '/docsTranslate/vueTestUtile/httpRequests.md' }
 
         ]
     },
@@ -100,7 +101,13 @@ export const vueTestUtile: Array<TypeRouter> = [
         text: '深入 Vue-Test-Utils',
         items: [
             { text: '插槽(Slots)', link: '/docsTranslate/vueTestUtile/slots.md' },
-            { text: '异步行为', link: '/docsTranslate/vueTestUtile/asynchronous.md' }
+            { text: '异步行为', link: '/docsTranslate/vueTestUtile/asynchronous.md' },
+            { text: '发送HTTP请求', link: '/docsTranslate/vueTestUtile/httpRequests.md' },
+            { text: '过滤(transition)', link: '/docsTranslate/vueTestUtile/transitions.md' },
+            { text: '组件实例', link: '/docsTranslate/vueTestUtile/componentInstance.md' },
+            { text: '可重复性和组合', link: '/docsTranslate/vueTestUtile/reusabilityCompositionre.md' },
+            { text: '测试 v-model', link: '/docsTranslate/vueTestUtile/vModel.md' },
+            { text: '测试 vuex', link: '/docsTranslate/vueTestUtile/vuex.md' }
         ]
     }
 ]
