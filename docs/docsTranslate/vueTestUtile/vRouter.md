@@ -213,3 +213,256 @@ test("routing", () => {
 console.warn node_modules/vue-router/dist/vue-router.cjs.js:225
   [Vue Router warn]: Unexpected error when starting the router: TypeError: Cannot read property '_history' of null
 ```
+
+虽然从警告中还不完全清楚，但这与`Vue Router 4`异步处理路由有关。
+
+`Vue-Router`提供了一个`isReady`功能，告诉我们路由器何时准备就绪。然后我们可以`await`它，以确保最初的导航已经完成。
+
+```js
+import { mount } from "@vue/test-utils";
+import { createRouter, createWebHistory } from "vue-router";
+import { routes } from "@/router";
+
+const router = createRouter({
+  history: createWebHistory(),
+  routes: routes,
+});
+
+test("routing", async () => {
+  router.push("/");
+
+  // After this line, router is ready
+  await router.isReady();
+
+  const wrapper = mount(App, {
+    global: {
+      plugins: [router],
+    },
+  });
+  expect(wrapper.html()).toContain("Welcome to the blogging app");
+});
+```
+
+现在测试通过了！这是一项相当艰巨的工作，但现在我们确保应用程序正确地导航到初始路线。
+
+现在，让我们导航到`/posts`，并确保路由按预期工作：
+
+```js
+import { mount } from "@vue/test-utils";
+import { createRouter, createWebHistory } from "vue-router";
+import { routes } from "@/router";
+
+const router = createRouter({
+  history: createWebHistory(),
+  routes: routes,
+});
+
+test("routing", async () => {
+  router.push("/");
+  await router.isReady();
+
+  const wrapper = mount(App, {
+    global: {
+      plugins: [router],
+    },
+  });
+  expect(wrapper.html()).toContain("Welcome to the blogging app");
+
+  await wrapper.find("a").trigger("click");
+  expect(wrapper.html()).toContain("Testing Vue Router");
+});
+```
+
+再一次，出现有点神秘的错误：
+
+```bash
+console.warn node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:39
+  [Vue warn]: Unhandled error during execution of native event handler
+    at <RouterLink to="/posts" >
+
+console.error node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:211
+  TypeError: Cannot read property '_history' of null
+```
+
+同样，由于 `Vue Router 4` 的新异步特性，我们需要`await`路由完成后再进行任何断言。
+
+然而，在这种情况下，我们没有可以等待的 `hasNavigated` 挂钩。一种选择是使用从 `Vue Test Utils` 导出的 `flushPromises` 函数：
+
+```js
+import { mount, flushPromises } from "@vue/test-utils";
+import { createRouter, createWebHistory } from "vue-router";
+import { routes } from "@/router";
+
+const router = createRouter({
+  history: createWebHistory(),
+  routes: routes,
+});
+
+test("routing", async () => {
+  router.push("/");
+  await router.isReady();
+
+  const wrapper = mount(App, {
+    global: {
+      plugins: [router],
+    },
+  });
+  expect(wrapper.html()).toContain("Welcome to the blogging app");
+
+  await wrapper.find("a").trigger("click");
+  await flushPromises();
+  expect(wrapper.html()).toContain("Testing Vue Router");
+});
+```
+
+它终于过去了。太棒了然而，这一切都是非常手动的——这是为一个微小而琐碎的应用程序准备的。这就是为什么在使用`Vue Test Utils`测试`Vue`组件时，使用模拟路由器是一种常见的方法。如果你喜欢继续使用真正的路由器，请记住，每个测试都应该使用自己的路由器实例，如下所示:
+
+```js
+import { mount, flushPromises } from "@vue/test-utils";
+import { createRouter, createWebHistory } from "vue-router";
+import { routes } from "@/router";
+
+let router;
+beforeEach(async () => {
+  router = createRouter({
+    history: createWebHistory(),
+    routes: routes,
+  });
+});
+
+test("routing", async () => {
+  router.push("/");
+  await router.isReady();
+
+  const wrapper = mount(App, {
+    global: {
+      plugins: [router],
+    },
+  });
+  expect(wrapper.html()).toContain("Welcome to the blogging app");
+
+  await wrapper.find("a").trigger("click");
+  await flushPromises();
+  expect(wrapper.html()).toContain("Testing Vue Router");
+});
+```
+
+## 使用具有`Composition API`的模拟路由器
+
+`Vue-router4`允许在具有`Composition API`的`setup`函数内部使用`router`和`route`。
+
+考虑使用`Composition API`重写的相同演示组件。
+
+```js
+import { useRouter, useRoute } from 'vue-router'
+
+jest.mock('vue-router', () => ({
+  useRoute: jest.fn(),
+  useRouter: jest.fn(() => ({
+    push: () => {}
+  }))
+}))
+
+test('allows authenticated user to edit a post', () => {
+  useRoute.mockImplementationOnce(() => ({
+    params: {
+      id: 1
+    }
+  }))
+
+  const push = jest.fn()
+  useRouter.mockImplementationOnce(() => ({
+    push
+  }))
+
+  const wrapper = mount(Component, {
+    props: {
+      isAuthenticated: true
+    },
+    global: {
+      stubs: ["router-link", "router-view"], // Stubs for router-link and router-view in case they're rendered in your template
+    }
+  })
+
+  await wrapper.find('button').trigger('click')
+
+  expect(push).toHaveBeenCalledTimes(1)
+  expect(push).toHaveBeenCalledWith('/posts/1/edit')
+})
+
+test('redirect an unauthenticated user to 404', () => {
+  useRoute.mockImplementationOnce(() => ({
+    params: {
+      id: 1
+    }
+  }))
+
+  const push = jest.fn()
+  useRouter.mockImplementationOnce(() => ({
+    push
+  }))
+
+  const wrapper = mount(Component, {
+    props: {
+      isAuthenticated: false
+    }
+    global: {
+      stubs: ["router-link", "router-view"], // Stubs for router-link and router-view in case they're rendered in your template
+    }
+  })
+
+  await wrapper.find('button').trigger('click')
+
+  expect(push).toHaveBeenCalledTimes(1)
+  expect(push).toHaveBeenCalledWith('/404')
+})
+```
+
+## 使用具有`Composition API`的真实路由器
+
+使用具有`Composition API`的真实路由与使用具有`Options API`的真实路由器的工作原理相同。请记住，就像`Options API`的情况一样，为每个测试实例化一个新的路由器对象被认为是一种很好的做法，而不是直接从应用程序导入路由器。
+
+```js
+import { mount } from "@vue/test-utils";
+import { createRouter, createWebHistory } from "vue-router";
+import { routes } from "@/router";
+
+let router;
+
+beforeEach(async () => {
+  router = createRouter({
+    history: createWebHistory(),
+    routes: routes,
+  });
+
+  router.push("/");
+  await router.isReady();
+});
+
+test("allows authenticated user to edit a post", async () => {
+  const wrapper = mount(Component, {
+    props: {
+      isAuthenticated: true,
+    },
+    global: {
+      plugins: [router],
+    },
+  });
+
+  const push = jest.spyOn(router, "push");
+  await wrapper.find("button").trigger("click");
+
+  expect(push).toHaveBeenCalledTimes(1);
+  expect(push).toHaveBeenCalledWith("/posts/1/edit");
+});
+```
+
+对于那些喜欢非手动方法的人，Posva 创建的库`vue-router-mock`也可以作为替代方案。
+
+## 结论
+
+- 您可以在测试中使用真实的路由器实例。
+- 不过，也有一些注意事项：`Vue Router 4`是异步的，我们在编写测试时需要将其考虑在内。
+- 对于更复杂的应用程序，可以考虑模拟`router`依赖关系，并专注于测试底层逻辑。
+- 尽可能利用测试运行程序的`stubbing/mocking`功能。
+- 使用`global.mocks`模拟全局依赖关系，例如`this.$route`路线和`this.$router`。

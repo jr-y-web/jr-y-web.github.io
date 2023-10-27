@@ -3,7 +3,7 @@ import { sidebar, nav } from './router'
 
 export default defineConfig({
   lang: 'zh-CN',
-  title: "zerone log",
+  title: "zerone",
   description: "alterEgo 技术博客",
   // lastUpdated: true,
   themeConfig: {
