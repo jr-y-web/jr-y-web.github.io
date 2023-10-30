@@ -110,9 +110,18 @@ export const vueTestUtile: Array<TypeRouter> = [
             { text: '测试 vuex', link: '/docsTranslate/vueTestUtile/vuex.md' },
             { text: '测试 vue router', link: '/docsTranslate/vueTestUtile/vRouter.md' },
             { text: '测试 teleport', link: '/docsTranslate/vueTestUtile/teleport.md' },
-            { text: 'Stubs 以及 Shallow Mount', link: '/docsTranslate/vueTestUtile/StubsAndShallowMount.md' }
+            { text: 'Stubs 以及 Shallow Mount', link: '/docsTranslate/vueTestUtile/stubsAndShallowMount.md' }
         ]
-    }
+    },
+    {
+        text: '扩展 Vue-Test-Utils',
+        items: [
+            { text: '插件', link: '/docsTranslate/vueTestUtile/plugins.md' },
+            { text: '社区与学习', link: '/docsTranslate/vueTestUtile/communityAndLearning.md' }
+        ]
+    },
+    { text: 'FAQ', link: '/docsTranslate/vueTestUtile/faq.md' },
+    { text: 'API 参考', link: '/docsTranslate/vueTestUtile/apiReference.md' }
 ]
 
 // 汇总字典 （config.nav使用）
