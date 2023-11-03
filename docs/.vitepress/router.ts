@@ -110,7 +110,7 @@ export const vueTestUtile: Array<TypeRouter> = [
             { text: '测试 vuex', link: '/docsTranslate/vueTestUtile/vuex.md' },
             { text: '测试 vue router', link: '/docsTranslate/vueTestUtile/vRouter.md' },
             { text: '测试 teleport', link: '/docsTranslate/vueTestUtile/teleport.md' },
-            { text: 'Stubs 以及 Shallow Mount', link: '/docsTranslate/vueTestUtile/stubsAndShallowMount.md' }
+            { text: 'Stubs 以及 Shallow Mount', link: '/docsTranslate/vueTestUtile/stubs.md' }
         ]
     },
     {
