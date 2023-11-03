@@ -227,10 +227,10 @@ export const nav = [
         ],
         activeMatch: '/interest/'
     },
-    {
-        text: '面试题挑战',
-        link: '/interview/202309.md'
-    },
+    // {
+    //     text: '面试题挑战',
+    //     link: '/interview/202309.md'
+    // },
     // { text: '关于我', link: '/about/me.md' }
     {
         text: '文档翻译',

@@ -1407,3 +1407,558 @@ test("html", () => {
 ```
 
 ### isVisible
+
+验证元素是否可见。
+
+**格式**
+
+```ts
+isVisible(): boolean
+```
+
+**详情**
+
+:::warning 警告
+`isVisible()`只有在使用`attachTo`将包装器附加到 `DOM` 时才能正常工作。
+:::
+
+```js
+const Component = {
+  template: `<div v-show="false"><span /></div>`,
+};
+
+test("isVisible", () => {
+  const wrapper = mount(Component);
+
+  expect(wrapper.find("span").isVisible()).toBe(false);
+});
+```
+
+### props
+
+返回传递给 Vue 组件的`props`。
+
+**格式**
+
+```ts
+props(): { [key: string]: any }
+props(selector: string): any
+props(selector?: string): { [key: string]: any } | any
+```
+
+**详情**
+
+`Component.vue`：
+
+```js
+export default {
+  name: "Component",
+  props: {
+    truthy: Boolean,
+    object: Object,
+    string: String,
+  },
+};
+```
+
+```vue
+<template>
+  <Component truthy :object="{}" string="string" />
+</template>
+
+<script>
+import Component from "@/Component";
+
+export default {
+  components: { Component },
+};
+</script>
+```
+
+`Component.spec.js`：
+
+```js
+import { mount } from "@vue/test-utils";
+import Component from "./Component.vue";
+
+test("props", () => {
+  const wrapper = mount(Component, {
+    global: { stubs: ["Foo"] },
+  });
+
+  const foo = wrapper.getComponent({ name: "Foo" });
+
+  expect(foo.props("truthy")).toBe(true);
+  expect(foo.props("object")).toEqual({});
+  expect(foo.props("notExisting")).toEqual(undefined);
+  expect(foo.props()).toEqual({
+    truthy: true,
+    object: {},
+    string: "string",
+  });
+});
+```
+
+:::tip 提示
+根据经验，针对传递的道具(`DOM`更新、发出的事件等)的效果进行测试。这将使测试比简单地断言通过了一个道具更强大。
+:::
+
+### setData
+
+更新组件内部数据。
+
+**格式**
+
+```js
+setData(data: Record<string, any>): Promise<void>
+```
+
+**详情**
+
+`setData`不允许设置组件中没有定义的新属性。
+
+:::warning 警告
+另外，请注意`setData`并不修改组合 API `setup()`数据。
+:::
+
+`Component.vue`：
+
+```vue
+<template>
+  <div>Count: {{ count }}</div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      count: 0,
+    };
+  },
+};
+</script>
+```
+
+`Component.spec.js`：
+
+```js
+import { mount } from "@vue/test-utils";
+import Component from "./Component.vue";
+
+test("setData", async () => {
+  const wrapper = mount(Component);
+  expect(wrapper.html()).toContain("Count: 0");
+
+  await wrapper.setData({ count: 1 });
+
+  expect(wrapper.html()).toContain("Count: 1");
+});
+```
+
+:::warning
+在调用`setData`时应该使用`await`，以确保 Vue 在做出断言之前更新 `DOM`。
+:::
+
+### setProps
+
+更新组件`props`。
+
+**格式**
+
+```ts
+setProps(props: Record<string, any>): Promise<void>
+```
+
+**详情**
+
+`Component.vue`:
+
+```vue
+<template>
+  <div>{{ message }}</div>
+</template>
+
+<script>
+export default {
+  props: ["message"],
+};
+</script>
+```
+
+`Component.spec.js`：
+
+```js
+import { mount } from "@vue/test-utils";
+import Component from "./Component.vue";
+
+test("updates prop", async () => {
+  const wrapper = mount(Component, {
+    props: {
+      message: "hello",
+    },
+  });
+
+  expect(wrapper.html()).toContain("hello");
+
+  await wrapper.setProps({ message: "goodbye" });
+
+  expect(wrapper.html()).toContain("goodbye");
+});
+```
+
+:::warning
+在调用`setProps`时应该使用`await`，以确保`Vue`在做出断言之前更新`DOM`。
+:::
+
+### setValue
+
+为 `DOM` 元素设置一个值。包括:
+
+- `<input>`
+  - `type ="checkbox"`和`Type ="radio"`被检测到并将具有元素。检查设置。
+- `<select>`
+  - `<option>` 检测具有元素并且选择
+
+**格式**
+
+```ts
+setValue(value: unknown, prop?: string): Promise<void>
+```
+
+**详情**
+
+`Component.vue`:
+
+```vue
+<template>
+  <input type="text" v-model="text" />
+  <p>Text: {{ text }}</p>
+
+  <input type="checkbox" v-model="checked" />
+  <div v-if="checked">The input has been checked!</div>
+
+  <select v-model="multiselectValue" multiple>
+    <option value="value1"></option>
+    <option value="value2"></option>
+    <option value="value3"></option>
+  </select>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      text: "",
+      checked: false,
+      multiselectValue: [],
+    };
+  },
+};
+</script>
+```
+
+`Component.spec.js`：
+
+```js
+import { mount } from "@vue/test-utils";
+import Component from "./Component.vue";
+
+test("setValue on checkbox", async () => {
+  const wrapper = mount(Component);
+
+  await wrapper.find('input[type="checkbox"]').setValue(true);
+  expect(wrapper.find("div")).toBe(true);
+
+  await wrapper.find('input[type="checkbox"]').setValue(false);
+  expect(wrapper.find("div")).toBe(false);
+});
+
+test("setValue on input text", async () => {
+  const wrapper = mount(Component);
+
+  await wrapper.find('input[type="text"]').setValue("hello!");
+  expect(wrapper.find("p").text()).toBe("Text: hello!");
+});
+
+test("setValue on multi select", async () => {
+  const wrapper = mount(Component);
+
+  // For select without multiple
+  await wrapper.find("select").setValue("value1");
+  // For select with multiple
+  await wrapper.find("select").setValue(["value1", "value3"]);
+});
+```
+
+:::warning 警告
+在调用`setValue`时应该使用`await`，以确保`Vue`在做出断言之前更新`DO`M`。
+:::
+
+### trigger
+
+触发`DOM`事件，`click`与`submit`、`keyup`。
+
+**格式**
+
+```ts
+interface TriggerOptions {
+  code?: String
+  key?: String
+  keyCode?: Number
+  [custom: string]: any
+}
+
+trigger(eventString: string, options?: TriggerOptions | undefined): Promise<void>
+```
+
+**详细**
+
+`Component.vue`：
+
+```vue
+<template>
+  <span>Count: {{ count }}</span>
+  <button @click="count++">Click me</button>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      count: 0,
+    };
+  },
+};
+</script>
+```
+
+`Component.spec.js`：
+
+```js
+import { mount } from "@vue/test-utils";
+import Component from "./Component.vue";
+
+test("trigger", async () => {
+  const wrapper = mount(Component);
+
+  await wrapper.find("button").trigger("click");
+
+  expect(wrapper.find("span").text()).toBe("Count: 1");
+});
+```
+
+请注意，`trigger`接受第二个参数，将选项传递给被触发的`Event`:
+
+```js
+await wrapper.trigger("keydown", { keyCode: 65 });
+```
+
+:::warning 警告
+在调用`trigger`时应该使用`await`，以确保`Vue`在做出断言之前更新 DOM。
+:::
+
+:::warning 警告
+有些事件，比如点击一个复选框来改变它的 v 模型，只有在测试使用`attachTo: document.body`的情况下才会起作用。否则，不会触发变更事件，v-model 值也不会发生变化。
+:::
+
+### unmount
+
+从`DOM`中卸载应用程序。
+
+**格式**
+
+```js
+unmount(): void
+```
+
+**详情**
+
+它只适用于从挂载返回的根 VueWrapper。用于测试后的手动清理。
+
+`Component.vue`：
+
+```vue
+<script>
+export default {
+  unmounted() {
+    console.log("unmounted!");
+  },
+};
+</script>
+```
+
+`Component.spec.js`：
+
+```js
+import { mount } from "@vue/test-utils";
+import Component from "./Component.vue";
+
+test("unmount", () => {
+  const wrapper = mount(Component);
+
+  wrapper.unmount();
+  // Component is removed from DOM.
+  // console.log has been called with 'unmounted!'
+});
+```
+
+## Wrapper properties
+
+### vm
+
+**格式**
+
+```ts
+vm: ComponentPublicInstance;
+```
+
+**详情**
+
+Vue 应用实例。您可以访问所有实例方法和实例属性。
+
+请注意，vm 仅在 VueWrapper 上可用。
+
+:::tip 提示
+根据经验，针对传递的道具(`DOM`更新、发出的事件等)的效果进行测试。这将使测试比简单地断言通过了一个道具更强大。
+:::
+
+## enableAutoUnmount
+
+**格式**
+
+```ts
+enableAutoUnmount(hook: (callback: () => void) => void);
+disableAutoUnmount(): void;
+```
+
+**详情**
+
+`enableAutoUnmount`允许自动销毁`Vue`包装器。销毁逻辑作为回调传递给钩子函数。常用的用法是将`enableAutoUnmount`与测试框架提供的拆包辅助函数一起使用，比如`afterEach`:
+
+```ts
+import { enableAutoUnmount } from "@vue/test-utils";
+
+enableAutoUnmount(afterEach);
+```
+
+如果您只希望在测试套件的特定子集中使用此行为，并且希望显式禁用此行为，那么`disableAutoUnmount`可能会很有用。
+
+## flushPromises
+
+**格式**
+
+```js
+flushPromises(): Promise<unknown>
+```
+
+**详情**
+
+`flushPromises`刷新所有已解析的承诺处理程序。这有助于确保诸如承诺或`DOM`更新之类的异步操作在对它们进行断言之前已经发生。
+
+请查看发出 HTTP 请求以查看[flushPromises 的实际示例](https://test-utils.vuejs.org/guide/advanced/http-requests.html)。
+
+## config
+
+### config.global
+
+**格式**
+
+```ts
+type GlobalMountOptions = {
+  plugins?: (Plugin | [Plugin, ...any[]])[];
+  config?: Partial<Omit<AppConfig, "isNativeTag">>;
+  mixins?: ComponentOptions[];
+  mocks?: Record<string, any>;
+  provide?: Record<any, any>;
+  components?: Record<string, Component | object>;
+  directives?: Record<string, Directive>;
+  stubs?: Stubs = Record<string, boolean | Component> | Array<string>;
+  renderStubDefaultSlot?: boolean;
+};
+```
+
+**详情**
+
+您可以为整个测试套件配置安装选项，而不是在每个测试的基础上配置安装选项。默认情况下，每次挂载组件时都将使用这些选项。如果需要，您可以在每个测试的基础上覆盖您的默认值。
+
+**例子**
+
+例如，全局模拟`vue-i18n`中的`$t`变量和一个组件:
+
+`Component.vue`：
+
+```vue
+<template>
+  <p>{{ $t("message") }}</p>
+  <my-component />
+</template>
+
+<script>
+import MyComponent from "@/components/MyComponent";
+
+export default {
+  components: {
+    MyComponent,
+  },
+};
+</script>
+```
+
+`Component.spec.js`：
+
+```js
+import { config, mount } from "@vue/test-utils";
+import { defineComponent } from "vue";
+
+const MyComponent = defineComponent({
+  template: `<div>My component</div>`,
+});
+
+config.global.stubs = {
+  MyComponent,
+};
+
+config.global.mocks = {
+  $t: (text) => text,
+};
+
+test("config.global mocks and stubs", () => {
+  const wrapper = mount(Component);
+
+  expect(wrapper.html()).toBe("<p>message</p><div>My component</div>");
+});
+```
+
+:::tip 提示
+请记住，此行为是全局的，而不是逐个挂载。您可能需要在每次测试之前和之后启用/禁用它。
+:::
+
+## components
+
+### RouterLinkStub
+
+当你不想模拟或包含一个完整的路由时，用来存根`Vue`的`router-link`的组件。
+
+你可以使用这个组件在呈现树中找到`router-link`组件。
+
+**使用**
+
+在挂载选项中设置为存根:
+
+```js
+import { mount, RouterLinkStub } from "@vue/test-utils";
+
+const wrapper = mount(Component, {
+  global: {
+    stubs: {
+      RouterLink: RouterLinkStub,
+    },
+  },
+});
+
+expect(wrapper.findComponent(RouterLinkStub).props().to).toBe("/some/path");
+```
+
+配合插槽使用:
+
+`RouterLinkStub`组件支持插槽内容，并且会为它的插槽道具返回非常基本的值。如果您需要在测试中使用更具体的`slot prop`值，请考虑使用真正的`router`，这样您就可以使用真正的`router-link`组件。或者，你也可以通过从`test-utils`包中复制实现来定义自己的`RouterLinkStub`组件。
