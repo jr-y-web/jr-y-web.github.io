@@ -57,10 +57,22 @@ export const webSkill: Array<TypeRouter> = [
     { text: '手摸手 带你入门且部署VitePress', link: '/web/skill/vitepress.md' }
 ]
 
-// games
-export const games: Array<TypeRouter> = [
-    { text: '赛博朋克2077 - 往日之影', link: '/interest/games/cyberpunk.md' }
+// interest
+export const interest: Array<TypeRouter> = [
+    {
+        text: 'No Game NO Life',
+        items: [
+            { link: '/interest/cyberpunk.md', text: '赛博朋克2077' }
+        ]
+    },
+    {
+        text: '电影',
+        items: [
+            { link: '/interest/dansIaMaison.md', text: '《登堂入室》---当剧情与现实融合》' }
+        ]
+    }
 ]
+
 
 // about
 export const about: Array<TypeRouter> = [
@@ -150,9 +162,9 @@ const navItem = {
         router: interview,
         text: '面试题挑战'
     },
-    games: {
-        router: games,
-        text: '游戏'
+    interest: {
+        router: interest,
+        text: '兴趣爱好'
     },
     vueTestUtile: {
         router: vueTestUtile,
@@ -222,9 +234,7 @@ export const nav = [
     },
     {
         text: '兴趣分享',
-        items: [
-            ...getNavOneRouter('games')
-        ],
+        link: '/interest/cyberpunk.md',
         activeMatch: '/interest/'
     },
     // {
@@ -255,7 +265,7 @@ export const sidebar = {
     // 面试题
     '/interview/': interview,
     // 兴趣分享 游戏
-    '/interest/games': games,
+    '/interest/': interest,
     // vue test utile 翻译
     '/docsTranslate/vueTestUtile': vueTestUtile
 }
