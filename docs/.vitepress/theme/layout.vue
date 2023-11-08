@@ -28,15 +28,15 @@ onMounted(() => {
                         s_div.setAttribute("id", "gitalk-page-container"); // 设置id
                         content_div.appendChild(s_div); // querySelector的节点可自己根据自己想加载的地方设置
                         const gitment = new Gitalk({
-                            proxy: 'https://cors-server-ecru.vercel.app/github_access_token',
+                            proxy: 'https://vercel.prohibitorum.top/github_access_token',
                             id: route.data.title, // 可选，推荐设置为页面标题，因为会作为标签传给Github issues，且issues标签有长度限制。
                             owner: "jr-y-web", // GitHub repository 所有者
-                            repo: "jr-y-web.github.io", // GitHub repositor
+                            repo: "zeroneTalk", // GitHub repositor
                             clientID: "1fc22a84d635f390d433", // 自己的clientID
                             clientSecret: "78084f7fb43f5d7136177556246e5784040bde13", // 自己的clientSecret
                             admin: ["jr-y-web"], // GitHub repository 所有者
                             labels: ["Gitalk"], // GitHub issue 的标签
-                            createIssueManually: false, //如果当前页面没有相应的 isssue 且登录的用户属于 admin，则会自动创建 issue。如果设置为 true，则显示一个初始化页面，创建 issue 需要点击 init 按钮。
+                            createIssueManually: true, //如果当前页面没有相应的 isssue 且登录的用户属于 admin，则会自动创建 issue。如果设置为 true，则显示一个初始化页面，创建 issue 需要点击 init 按钮。
                         });
                         gitment.render("gitalk-page-container");
                     }
