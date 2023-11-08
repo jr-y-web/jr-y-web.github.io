@@ -1,41 +1,50 @@
 {
-  "hash": "6f12585b",
-  "browserHash": "634998c5",
+  "hash": "8663d776",
+  "browserHash": "b0d73739",
   "optimized": {
     "vue": {
-      "src": "../../../../../../node_modules/vue/dist/vue.runtime.esm-bundler.js",
+      "src": "../../../../node_modules/vue/dist/vue.runtime.esm-bundler.js",
       "file": "vue.js",
-      "fileHash": "354d3a8f",
+      "fileHash": "cd1bdac6",
       "needsInterop": false
     },
     "vitepress > @vue/devtools-api": {
-      "src": "../../../../node_modules/.store/@vue+devtools-api@6.5.1/node_modules/@vue/devtools-api/lib/esm/index.js",
+      "src": "../../../../node_modules/@vue/devtools-api/lib/esm/index.js",
       "file": "vitepress___@vue_devtools-api.js",
-      "fileHash": "345b8c52",
+      "fileHash": "4bfb507b",
       "needsInterop": false
     },
     "vitepress > @vueuse/integrations/useFocusTrap": {
-      "src": "../../../../node_modules/.store/@vueuse+integrations@10.5.0/node_modules/@vueuse/integrations/useFocusTrap.mjs",
+      "src": "../../../../node_modules/@vueuse/integrations/useFocusTrap.mjs",
       "file": "vitepress___@vueuse_integrations_useFocusTrap.js",
-      "fileHash": "63295b61",
+      "fileHash": "8623d738",
       "needsInterop": false
     },
     "vitepress > mark.js/src/vanilla.js": {
-      "src": "../../../../node_modules/.store/mark.js@8.11.1/node_modules/mark.js/src/vanilla.js",
+      "src": "../../../../node_modules/mark.js/src/vanilla.js",
       "file": "vitepress___mark__js_src_vanilla__js.js",
-      "fileHash": "925fd08f",
+      "fileHash": "3e647db3",
       "needsInterop": false
     },
     "vitepress > minisearch": {
-      "src": "../../../../node_modules/.store/minisearch@6.1.0/node_modules/minisearch/dist/es/index.js",
+      "src": "../../../../node_modules/minisearch/dist/es/index.js",
       "file": "vitepress___minisearch.js",
-      "fileHash": "9192a4c7",
+      "fileHash": "27e2c8d3",
       "needsInterop": false
+    },
+    "gitalk": {
+      "src": "../../../../node_modules/gitalk/dist/gitalk.js",
+      "file": "gitalk.js",
+      "fileHash": "8380e991",
+      "needsInterop": true
     }
   },
   "chunks": {
-    "chunk-4EKHRIZA": {
-      "file": "chunk-4EKHRIZA.js"
+    "chunk-V634PGSD": {
+      "file": "chunk-V634PGSD.js"
+    },
+    "chunk-76J2PTFD": {
+      "file": "chunk-76J2PTFD.js"
     }
   }
 }

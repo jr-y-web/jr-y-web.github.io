@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "type": "module",
   "devDependencies": {
+    "gitalk": "^1.8.0",
     "vitepress": "1.0.0-rc.12"
   },
   "scripts": {
