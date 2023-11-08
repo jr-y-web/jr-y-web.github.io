@@ -31,7 +31,7 @@ onMounted(() => {
                             proxy: 'https://cors-server-ecru.vercel.app/github_access_token',
                             id: route.data.title, // 可选，推荐设置为页面标题，因为会作为标签传给Github issues，且issues标签有长度限制。
                             owner: "jr-y-web", // GitHub repository 所有者
-                            repo: "vite-press", // GitHub repository
+                            repo: "zeroneTalk", // GitHub repositor
                             clientID: "1fc22a84d635f390d433", // 自己的clientID
                             clientSecret: "78084f7fb43f5d7136177556246e5784040bde13", // 自己的clientSecret
                             admin: ["jr-y-web"], // GitHub repository 所有者
