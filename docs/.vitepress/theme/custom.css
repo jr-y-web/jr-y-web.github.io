@@ -1,44 +1,55 @@
 :root {
-  
-    --vp-home-hero-name-color: transparent;
-    --vp-home-hero-name-background: -webkit-linear-gradient(120deg,   #ed9e38, #2457f1);
-    --vp-home-hero-image-background-image: linear-gradient(-45deg, #ed9e38 50%, #2457f1 50%);
-    --vp-home-hero-image-filter: blur(72px);
-    --vp-c-r-yellow: #f93;
-    --vp-c-r-blue: #708fff;
-    --vp-c-r-red: #f43f5e;
+  --vp-home-hero-name-color: transparent;
+  --vp-home-hero-name-background: -webkit-linear-gradient(
+    120deg,
+    #ed9e38,
+    #2457f1
+  );
+  --vp-home-hero-image-background-image: linear-gradient(
+    -45deg,
+    #ed9e38 50%,
+    #2457f1 50%
+  );
+  --vp-home-hero-image-filter: blur(72px);
+  --vp-c-r-yellow: #f93;
+  --vp-c-r-blue: #708fff;
+  --vp-c-r-red: #f43f5e;
 
-    .custom-block.warning {
-      background: transparent;
-      border-color:  var(--vp-c-r-yellow);
-      color: var(--vp-c-r-yellow);
-    }
-
-    .custom-block.tip {
-      background: transparent;
-      border-color:  var(--vp-c-r-blue);
-      color:  var(--vp-c-r-blue);
-    }
- 
-    .custom-block.danger {
-      background: transparent;
-      border-color:  var(--vp-c-r-red);
-      color: var(--vp-c-r-red);
-    }
-
-    --vp-code-link-color: #ed9e38;
-    --vp-code-link-hover-color: #ed9e38;
-    --vp-c-brand-1: #ed9e38;
-    --vp-c-brand-2: #ed9e38;
- 
-
-    .vp-doc a {
-      text-decoration: none;
-    }
-    .vp-doc a:hover { text-decoration: underline;}
-
-    .dark .gt-header-textarea {
-      color: #333 !important;
-    }
+  .custom-block.warning {
+    background: transparent;
+    border-color: var(--vp-c-r-yellow);
+    color: var(--vp-c-r-yellow);
   }
 
+  .custom-block.tip {
+    background: transparent;
+    border-color: var(--vp-c-r-blue);
+    color: var(--vp-c-r-blue);
+  }
+
+  .custom-block.danger {
+    background: transparent;
+    border-color: var(--vp-c-r-red);
+    color: var(--vp-c-r-red);
+  }
+
+  --vp-code-link-color: #ed9e38;
+  --vp-code-link-hover-color: #ed9e38;
+  --vp-c-brand-1: #ed9e38;
+  --vp-c-brand-2: #ed9e38;
+
+  .vp-doc a {
+    text-decoration: none;
+  }
+  .vp-doc a:hover {
+    text-decoration: underline;
+  }
+
+  .gt-header-textarea {
+    color: var(--docsearch-text-color);
+  }
+  .gt-comment-content:hover {
+    box-shadow: 0 6px 10px 0 rgba(95, 101, 105, 0.15) !important;
+    transform: translateY(-5px);
+  }
+}
