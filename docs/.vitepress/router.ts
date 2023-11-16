@@ -69,7 +69,7 @@ export const interest: Array<TypeRouter> = [
     {
         text: '电影',
         items: [
-            { link: '/interest/dansIaMaison.md', text: '《登堂入室》---当剧情与现实融合》' }
+            { link: '/interest/dansIaMaison.md', text: '《登堂入室》' }
         ]
     }
 ]
