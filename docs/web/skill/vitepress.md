@@ -165,7 +165,7 @@ features:
 
 ## 配置文件
 
-除了首页的配置（严谨应该说编写）是在`index.md`之外，绝大数的配置都在`./docs/.vitepress/config.ts`中， 重点是`themeConfig`对象，它是灵魂所在。如果刚初始化，呢么`themeConfig`则有`nav`与`sidebar`以及`socialLinks`。
+除了首页的配置（严谨应该说编写）是在`index.md`之外，绝大数的配置都在`./docs/.vitepress/config.ts`中， 重点是`themeConfig`对象，它是灵魂所在。如果刚初始化，那么`themeConfig`则有`nav`与`sidebar`以及`socialLinks`。
 
 ### nav 导航链接
 
