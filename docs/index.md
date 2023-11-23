@@ -4,7 +4,7 @@ layout: home
 hero:
   name: "zerone"
   text: "记录工作和学习中遇到的问题和get到的技能"
-  tagline: ЯR - レイド・ラプターズ・フォース
+  tagline: "理解疯批，成为疯批，超越疯批"
   image:
     src: "../blogLogo.png"
     alt: "logo"
