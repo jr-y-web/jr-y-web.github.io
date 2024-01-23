@@ -1,13 +1,13 @@
 # Echarts 绘制特殊圆环图的需求
 
-先直接看需求，需求是需要使用Echarts绘制出下图的圆环。 
+先直接看需求，需求是需要使用 Echarts 绘制出下图的圆环。
 
 ![Alt text](../../assets/webSkill/ringxq.png)
 
 需要注意是：
 
-- 数据是从底部（圆的90度）开始逆时针充盈。
-- 如果没有数值没有大于等于100，则数据的结尾处会连接一个灰黑色的背景条，且这个灰黑色的背景条与数据条会有空白间隙。
+- 数据是从底部（圆的 90 度）开始逆时针充盈。
+- 如果没有数值没有大于等于 100，则数据的结尾处会连接一个灰黑色的背景条，且这个灰黑色的背景条与数据条会有空白间隙。
 - 数据的结尾会存在一个倒三角沿着数据条径向排布
 - 中间需要显示数值，底部显示指标名
 
@@ -103,44 +103,42 @@ interface {
  ]
 ```
 
-动态计算可以根据需求自行调配比例，现在我这里获取数值的占比后，通过`100 - 占比`得出剩余的区域，然后灰黑色条占剩下的8分之10，余下则被间隙填充（间隙是有两个的）。当然如果数据大于或者等于100的时候，需要多一些额外的操作，不显示灰黑条与间隙。
+动态计算可以根据需求自行调配比例，现在我这里获取数值的占比后，通过`100 - 占比`得出剩余的区域，然后灰黑色条占剩下的 8 分之 10，余下则被间隙填充（间隙是有两个的）。当然如果数据大于或者等于 100 的时候，需要多一些额外的操作，不显示灰黑条与间隙。
 
 ```js
 /**
  *  @description  动态绘制
  */
 const drawChart = () => {
-    let value = Number(data.value) * 100
+  let value = Number(data.value) * 100;
 
+  let residue = 100 - value;
 
-    let residue = 100 - value
+  let ash = residue * (8 / 10); // 灰色设定为10分之八
 
-    let ash = residue * (8 / 10)   // 灰色设定为10分之八
+  let white = residue * (1 / 10); // 间隔空白 每个占10分一
 
-    let white = residue * (1 / 10) // 间隔空白 每个占10分一
+  ringConfig.value.series[0].data[0].value = value;
 
-    ringConfig.value.series[0].data[0].value = value
+  ringConfig.value.series[0].data[2].value = value === 0 ? 100 : ash; // 如果是超过100%，不显示
 
-    ringConfig.value.series[0].data[2].value = value === 0 ? 100 : ash   // 如果是超过100%，不显示
-
-    if (value !== 0 || value < 100) {
-        ringConfig.value.series[0].data[1].value = value === 100 ? 0 : white / 2
-        ringConfig.value.series[0].data[3].value = value === 100 ? 0 : white / 2
-    }
-    if (value === 0) {
-        ringConfig.value.series[0].data[1].value = 0
-        ringConfig.value.series[0].data[3].value = 0
-
-    }
-}
+  if (value !== 0 || value < 100) {
+    ringConfig.value.series[0].data[1].value = value === 100 ? 0 : white / 2;
+    ringConfig.value.series[0].data[3].value = value === 100 ? 0 : white / 2;
+  }
+  if (value === 0) {
+    ringConfig.value.series[0].data[1].value = 0;
+    ringConfig.value.series[0].data[3].value = 0;
+  }
+};
 ```
-
 
 ## 倒三角标识
 
 这里引用图表叠加，在`echarts`中，类型为`pie`能与`gauge`叠加使用，既然`pie`无法绘制数据图表，这里把绘制“倒三角”的工作交给`gauge`的指针，同时把圆环的`value`交给仪表盘，这样就可以让“倒三角”处于根据`value`的变化径向对着圆环对齐。
 
 向`series`新增一个`gauge`：
+
 ```js
 {
     itemStyle: {
@@ -191,40 +189,35 @@ const drawChart = () => {
  *  @description  动态绘制
  */
 const drawChart = () => {
-    let value = Number(data.value) * 100
+  let value = Number(data.value) * 100;
 
+  let residue = 100 - value;
 
-    let residue = 100 - value
+  let ash = residue * (8 / 10); // 灰色设定为10分之八
 
-    let ash = residue * (8 / 10)   // 灰色设定为10分之八
+  let white = residue * (1 / 10); // 间隔空白 每个占10分一
 
-    let white = residue * (1 / 10) // 间隔空白 每个占10分一
+  ringConfig.value.series[0].data[0].value = value;
 
-    ringConfig.value.series[0].data[0].value = value
+  ringConfig.value.series[0].data[2].value = value === 0 ? 100 : ash; // 如果是超过100%，不显示
 
-    ringConfig.value.series[0].data[2].value = value === 0 ? 100 : ash   // 如果是超过100%，不显示
+  if (value !== 0 || value < 100) {
+    ringConfig.value.series[0].data[1].value = value === 100 ? 0 : white / 2;
+    ringConfig.value.series[0].data[3].value = value === 100 ? 0 : white / 2;
+  }
+  if (value === 0) {
+    ringConfig.value.series[0].data[1].value = 0;
+    ringConfig.value.series[0].data[3].value = 0;
+  }
 
-    if (value !== 0 || value < 100) {
-        ringConfig.value.series[0].data[1].value = value === 100 ? 0 : white / 2
-        ringConfig.value.series[0].data[3].value = value === 100 ? 0 : white / 2
-    }
-    if (value === 0) {
-        ringConfig.value.series[0].data[1].value = 0
-        ringConfig.value.series[0].data[3].value = 0
-
-    }
-
-
-    // 是否开始要显示进度条了
-    if (value && value > 0) {
-        ringConfig.value.series[1].itemStyle.opacity = 1
-        ringConfig.value.series[1].data[0].value = value
-    } else {
-        ringConfig.value.series[1].itemStyle.opacity = 0
-
-    }
-}
+  // 是否开始要显示进度条了
+  if (value && value > 0) {
+    ringConfig.value.series[1].itemStyle.opacity = 1;
+    ringConfig.value.series[1].data[0].value = value;
+  } else {
+    ringConfig.value.series[1].itemStyle.opacity = 0;
+  }
+};
 ```
-
 
 ok，现在就完成了这个特殊的圆环图。
