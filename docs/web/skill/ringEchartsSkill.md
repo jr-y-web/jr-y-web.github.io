@@ -203,6 +203,7 @@ const drawChart = () => {
 
   if (value !== 0 || value < 100) {
     ringConfig.value.series[0].data[1].value = value === 100 ? 0 : white / 2;
+
     ringConfig.value.series[0].data[3].value = value === 100 ? 0 : white / 2;
   }
   if (value === 0) {
@@ -213,6 +214,7 @@ const drawChart = () => {
   // 是否开始要显示进度条了
   if (value && value > 0) {
     ringConfig.value.series[1].itemStyle.opacity = 1;
+
     ringConfig.value.series[1].data[0].value = value;
   } else {
     ringConfig.value.series[1].itemStyle.opacity = 0;
