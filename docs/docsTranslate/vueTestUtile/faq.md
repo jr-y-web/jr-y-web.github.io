@@ -31,5 +31,3 @@ TypeError: Cannot set property prefix of #<Element> which has only a getter
 - 使用`mount`而不是`shallowMount`来渲染无存根
 - 通过模拟`console.warn`来忽略警告
 - 重命名该道具以避免与元素属性冲突
-
-大大的

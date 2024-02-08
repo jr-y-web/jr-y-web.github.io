@@ -40,6 +40,12 @@ export const nodejs: Array<TypeRouter> = [
 
 // nest.js
 export const nestjs: Array<TypeRouter> = [
+    {
+        text: '知识梳理', items: [
+            { text: '守卫 Guard', link: '/serve/nestjs/guard.md' },
+            { text: '管道 Pipe', link: '/serve/nestjs/pipe.md' }
+        ]
+    },
     { text: '环境变量配置', link: '/serve/nestjs/env.md' },
     { text: '如何连接数据库', link: '/serve/nestjs/nestSql.md' },
     { text: '如何集成日志插件winston.js', link: '/serve/nestjs/logger.md' }
@@ -239,10 +245,10 @@ export const nav = [
         link: '/interest/cyberpunk.md',
         activeMatch: '/interest/'
     },
-    // {
-    //     text: '面试题挑战',
-    //     link: '/interview/202309.md'
-    // },
+    {
+        text: '面试题挑战',
+        link: '/interview/202309.md'
+    },
     // { text: '关于我', link: '/about/me.md' }
     {
         text: '文档翻译',
