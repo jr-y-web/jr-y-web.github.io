@@ -97,7 +97,7 @@ class controller {
 
 ### ParseUUIDPipe
 
-`ParseUUIDPipe`作用是用来校验参入参数是否为`UUID`的内置管道，如果传入参数不是`UUID`它将会报错。
+`ParseUUIDPipe`作用是用来校验传入参数是否为`UUID`的内置管道，如果传入参数不是`UUID`它将会报错。
 
 ```ts
 class controller {
@@ -126,3 +126,110 @@ class controller {
   }
 }
 ```
+
+### ParseArrayPipe
+
+`ParseArrayPipe`是用来把传入的参数转换为数组的内置管道。
+
+它相对来说比较特殊，需要安装一个包，这两个包也是`Nest`项目中非常常使用的的，它是`class-transformer`，它的作用将是把普通对象转换为对应 class 实例的包。
+
+```bash
+pnpm i -D class-transformer
+```
+
+ok,安装成功后，就可以使用`ParseArrayPipe`了;
+
+```ts
+class controller {
+  @Get()
+  getList(@Query("value", ParseArrayPipe) value: any) {
+    return value; // 假设传递的值为1,2,3  ---> 那么return的结果则是[1,2,3]
+  }
+}
+```
+
+当然，也可以自定义分隔符。
+
+```ts
+class controller {
+  @Get()
+  getList(
+    @Query(
+      "value",
+      new ParseArrayPipe({
+        separator: "..", // 分隔符由,改变为..
+      })
+    )
+    value: any
+  ) {
+    return value; // 假设传递的值为1..2..3  ---> 那么return的结果则是[1,2,3]
+  }
+}
+```
+
+## ValidationPipe 管道验证传入参数
+
+`ValidationPipe`可以从字面意思理解为校验管道，校验传入参数是否满足定义要求，如果不满足则直接报错返回给前端，后续逻辑不会再进行。要使用`ValidationPipe`还需要借助两个包，一个是`class-transformer`与`class-validator`。
+
+```bash
+pnpm i -D class-transformer class-validator
+```
+
+然后用法还是老样子，在路由参数处添加；
+
+```ts
+class TypeItem {
+  name: string;
+  password: string;
+}
+
+class controller {
+  @Get()
+  getList(
+    @Query("item", new ValidationPipe())
+    item: TypeItem
+  ) {
+    return item;
+  }
+}
+```
+
+当然现在`ValidationPipe`是还未生效的，那么此刻有需求需要传入参数重，`name` 与 `password` 的 d 的长度做一定限制，并且需要是字符串，`ValidationPipe`如何进行处理？ 这里因为我们安装了`class-validator`它能让实体类上写上装饰器来限制传入参数的要求。用法也非常简单;
+
+```ts
+import { IsString, Length } from "class-validator";
+class TypeItem {
+  @IsString()
+  @Length(1, 10)
+  name: string;
+
+  @IsString()
+  @Length(6, 10)
+  password: string;
+}
+
+class controller {
+  @Get()
+  getList(
+    @Query("item", new ValidationPipe())
+    item: TypeItem
+  ) {
+    return item;
+  }
+}
+```
+
+这样如果传入的长度不符合上述实体类定义，逻辑将报错，无法执行。
+
+当然可以更为方便的，直接在全局中使用`new ValidationPipe()`，就可以省略很多代码，
+
+```ts
+// main.ts
+    app.useGlobalPipes(
+        new ValidationPipe({
+            whitelist: true,
+        });
+    );
+```
+
+特别的`ValidationPipe`还可以接受参数，如上述`whitelist`为 `true` 时，`Nest`将过滤掉实体中不存在的字段。 比如实体只有`name`，那么后端获取参数上下文时，将忽略掉其他参数（既获取不了），大大增加了后端的安全性，防止前端传入太多的垃圾数据。
