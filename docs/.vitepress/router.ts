@@ -62,7 +62,8 @@ export const webSkill: Array<TypeRouter> = [
     { text: 'Css has选择器', link: '/web/skill/cssHas.md' },
     { text: '手摸手 带你入门且部署VitePress', link: '/web/skill/vitepress.md' },
     { text: '我必须立马评论！为 VitePress 添加评论功能', link: '/web/skill/vitepressGitalk.md' },
-    { text: 'Echarts 绘制特殊的圆环图', link: '/web/skill/ringEchartsSkill.md' }
+    { text: 'Echarts 绘制特殊的圆环图', link: '/web/skill/ringEchartsSkill.md' },
+    { text: '快速学会YAML', link: '/web/skill/yaml.md' }
 ]
 
 // interest
@@ -154,10 +155,10 @@ const navItem = {
         router: nestjs,
         text: 'Nest.js笔记'
     },
-    vuejs: {
-        text: 'Vue.js 笔记',
-        router: vuejs
-    },
+    // vuejs: {
+    //     text: 'Vue.js 笔记',
+    //     router: vuejs
+    // },
     webSkill: {
         text: '前端技巧',
         router: webSkill
