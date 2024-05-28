@@ -1,7 +1,7 @@
 <template>
     <Layout />
 </template>
-  
+
 <script setup>
 import DefaultTheme from "vitepress/theme";
 const { Layout } = DefaultTheme;
@@ -11,6 +11,8 @@ import Gitalk from "gitalk";
 import { useRouter } from "vitepress";
 
 let { route } = useRouter(); // 页面路由对象
+
+
 
 onMounted(() => {
     watch(
@@ -47,4 +49,3 @@ onMounted(() => {
     );
 });
 </script>
-  

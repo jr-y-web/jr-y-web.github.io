@@ -58,12 +58,24 @@ export const vuejs: Array<TypeRouter> = [
 
 // webSkill  
 export const webSkill: Array<TypeRouter> = [
-    { text: 'visibilitystate 检测页面是否处于焦点状态', link: '/web/skill/visibilitystate.md' },
-    { text: 'Css has选择器', link: '/web/skill/cssHas.md' },
-    { text: '手摸手 带你入门且部署VitePress', link: '/web/skill/vitepress.md' },
-    { text: '我必须立马评论！为 VitePress 添加评论功能', link: '/web/skill/vitepressGitalk.md' },
-    { text: 'Echarts 绘制特殊的圆环图', link: '/web/skill/ringEchartsSkill.md' },
-    { text: '快速学会YAML', link: '/web/skill/yaml.md' }
+    {
+        text: "VitePress 从零建立自己博客",
+        items: [
+            { text: '手摸手 带你入门且部署VitePress', link: '/web/skill/vitepress.md' },
+            { text: '我必须立马评论！为 VitePress 添加评论功能', link: '/web/skill/vitepressGitalk.md' },
+        ]
+    },
+    {
+        text: "工作中的骚解法",
+        items: [
+            { text: 'visibilitystate 检测页面是否处于焦点状态', link: '/web/skill/visibilitystate.md' },
+            { text: 'Css has选择器', link: '/web/skill/cssHas.md' },
+            { text: 'Echarts 绘制特殊的圆环图', link: '/web/skill/ringEchartsSkill.md' },
+            { text: '快速学会YAML', link: '/web/skill/yaml.md' },
+            { text: '一个“夸张”的表格内嵌层级下拉选择需求', link: '/web/skill/exaggerateTableInSelect.md' }
+        ]
+    }
+
 ]
 
 // interest
