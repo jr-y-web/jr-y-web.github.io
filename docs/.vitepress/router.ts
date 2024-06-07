@@ -43,6 +43,7 @@ export const nestjs: Array<TypeRouter> = [
     {
         text: '知识梳理', items: [
             { text: '第一步 firstStep', link: '/serve/nestjs/firstStep.md' },
+            { text: '控制器 controller', link: '/serve/nestjs/controller.md' },
             { text: '守卫 Guard', link: '/serve/nestjs/guard.md' },
             { text: '管道 Pipe', link: '/serve/nestjs/pipe.md' }
         ]
