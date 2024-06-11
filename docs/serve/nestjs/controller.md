@@ -19,6 +19,18 @@ nest g co <控制器名称>
 
 可以看到控制器（`controller`）是被装饰器`@Controller()`所修饰的类，能接收一个参数，该参数会以路径的方式映射到 url 中。比如上述的`@Controller("cats")`，假设当前`nest.js`服务的地址为`localhost:3000`，那么不设置全局前缀的前提下，访问`localhost:3000/cats`即可访问该控制器（`controller`）的路由。
 
+:::warning 注意
+`Nest.js`是由模块、控制器、服务组成，控制器要生效必须需要在对应模块的`controllers`数组注入或者模块在另一个模块的`import`完成注入。
+
+```ts
+@Module({
+  controllers: [controllers],
+  providers: [],
+})
+```
+
+:::
+
 ## 路由
 
 “路由”不严谨的说就是前后端联调中所说“接口”，要想访问指定的路由，只要访问特定的控制器前缀以及对应路由名即可（如果有指定的话）。举个例子现在搓一个获取“猫咪列表”的`get`的路由：
@@ -79,7 +91,7 @@ REST API（Representational State Transfer Application Programming Interface）�
 
 ## 获取参数
 
-前端向后端发起接口请求必然会携带参数，`Nest.js`这里提供了非常多开箱即用的装饰器，来快速的获取`request`或其中的内容。比如上述例子中获取`request`：
+前端向后端发起接口请求必然会携带参数，`Nest.js`这里提供了非常多开箱即用的装饰器，来快速的获取`request`或其中的内容。比如下面例子中获取`request`：
 
 ```ts
 import { Get, Controller, Request } from "@nest/common";
@@ -93,7 +105,7 @@ export class CatController {
 }
 ```
 
-当然一般拿`request`都是获取其中传入的参数或者一些特定的内容，这里不必`req.body`等操作, `Nest.js`有相当简单且方便的装饰器：
+当然一般拿`request`都是获取其中传入的参数或者一些特定的内容，这里不必`req.body`获取传入参数等操作, `Nest.js`有相当简单且方便的装饰器：
 
 ### 参数的类型推断
 
@@ -101,17 +113,26 @@ export class CatController {
 
 这也是后续知识面需要额外习惯的一点（特别是`TypeOrm`），这里定义传入数据格式使用类来代替`interface`。
 
+具体用法只需要在装饰器修饰的参数后`: dto`类型定义即可。
+
+举个例子：
+
+```ts
+@Body() body: bodyDto
+```
+
 ### @Query 装饰器
 
 `@Query`主要获取路由中`?`后的参数，比如现在路由为`localhost:3000/cats/list?type=布偶猫`，需要获取参数 type:
 
 ```ts
 import { Get, Controller, Query } from "@nest/common";
+import { queryDto } from "./dto/create.dto"; // 假设在 create.dto.ts 有 queryDto
 
 @Controller("cats")
 export class CatController {
   @Get("list")
-  getCats(@Query() query) {
+  getCats(@Query() query: queryDto  //确定dto) {
     return "This is route getCats" + `as ${query.type}`; // ---> This is route getCats as 布偶猫
   }
 }
@@ -121,11 +142,12 @@ export class CatController {
 
 ```ts
 import { Get, Controller, Query } from "@nest/common";
+import { queryDto } from "./dto/create.dto"; // 假设在 create.dto.ts 有 queryDto
 
 @Controller("cats")
 export class CatController {
   @Get("list")
-  getCats(@Query("type") type) {
+  getCats(@Query("type") type: queryDto) {
     return "This is route getCats" + `as ${type}`; // ---> This is route getCats as 布偶猫
   }
 }
@@ -137,11 +159,12 @@ export class CatController {
 
 ```ts
 import { Get, Controller, Query } from "@nest/common";
+import { paramDto } from "./dto/create.dto";
 
 @Controller("cats")
 export class CatController {
   @Get("list/:id")
-  getCats(@Param() Param) {
+  getCats(@Param() Param: paramDto) {
     return "This is route getCats" + `as ${Param.id}`; // ---> This is route getCats as 1
   }
 }
@@ -167,11 +190,12 @@ export class CatController {
 
 ```ts
 import { Get, Controller, Query, Body } from "@nest/common";
+import { bodyDto } from "./dto/body.dto";
 
 @Controller("cats")
 export class CatController {
   @Get("list")
-  getCats(@Body() body) {
+  getCats(@Body() body: bodyDto) {
     return "This is route getCats" + `as ${body.name}`; // ---> This is route getCats as 白
   }
 }
@@ -181,12 +205,86 @@ export class CatController {
 
 ```ts
 import { Get, Controller, Query, Body } from "@nest/common";
+import { bodyDto } from "./dto/body.dto";
 
 @Controller("cats")
 export class CatController {
   @Get("list/:id")
-  getCats(@Body() body, @Query('id') : id) {
+  getCats(@Body() body: bodyDto, @Query('id') : id) {
     return "This is route getCats" + `as ${body.name} - ${id}`; // ---> This is route getCats as 白 - 1
+  }
+}
+```
+
+## 状态码
+
+`Nest.js`默认**非**`post`请求响应的状态码为`200`，`post`响应为`201`。但它支持根据实际需求进行自定义的返回（原则上尽量不改，遵循框架约束）。这里只需要使用`@HttpCode`装饰器，它一样也是在`@nest/common`导出，它接受一个数值类型，这个数值就是需要自定义返回的状态码。
+
+```ts
+import { Get, Controller, Query, HttpCode } from "@nest/common";
+import { queryDto } from "./dto/create.dto";
+
+@Controller("cats")
+@HttpCode(203) // 让它响应的code为203
+export class CatController {
+  @Get("list")
+  getCats(@Query() query: queryDto) {
+    return "This is route getCats" + `as ${query.type}`; // ---> This is route getCats as 布偶猫
+  }
+}
+```
+
+## 自定义请求头类型
+
+当需要自定义请求头的时候，就需要使用`@Header`装饰器，该装饰器一样从`@nest/common`引入。
+
+```ts
+import { Get, Controller, Query, Header } from "@nest/common";
+import { queryDto } from "./dto/create.dto";
+
+@Controller("cats")
+@Header("Cache-Control", "none")
+export class CatController {
+  @Get("list")
+  getCats(@Query() query: queryDto) {
+    return "This is route getCats" + `as ${query.type}`; // ---> This is route getCats as 布偶猫
+  }
+}
+```
+
+## 重定向
+
+当需要把该路由重定向到另一个 url 中，这时候就需要使用`@Redirect`装饰器，该装饰器接受两个参数，第一个参数为 url(string),需要指定该路由重定向去哪里。另一个参数为 startCode 状态码，它是可选的，不传的时候默认为 301。
+
+```ts
+import { Get, Controller, Query, Header } from "@nest/common";
+import { queryDto } from "./dto/create.dto";
+
+@Controller("cats")
+@Redirect("http://nestjs.com", 303)
+export class CatController {
+  @Get("list")
+  getCats(@Query() query: queryDto) {
+    return "This is route getCats" + `as ${query.type}`; // ---> This is route getCats as 布偶猫
+  }
+}
+```
+
+有时候，需要根据逻辑的情况自定义重定向。那么这个时候只要满足`type = {url: string, startCode: number}`复写重定向即可。
+
+```ts
+import { Get, Controller, Query, Header } from "@nest/common";
+import { queryDto } from "./dto/create.dto";
+
+@Controller("cats")
+@Redirect("http://nestjs.com", 303)
+export class CatController {
+  @Get("list")
+  getCats(@Query() query: queryDto) {
+    return {
+      url: "http://nestjs.com/${query.id}",
+      startCode: 301,
+    }; //复写 @Redirect
   }
 }
 ```

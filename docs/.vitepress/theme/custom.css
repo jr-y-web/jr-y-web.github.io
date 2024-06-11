@@ -33,10 +33,10 @@
     color: var(--vp-c-r-red);
   }
 
-  --vp-code-link-color: #ed9e38;
-  --vp-code-link-hover-color: #ed9e38;
-  --vp-c-brand-1: #ed9e38;
-  --vp-c-brand-2: #ed9e38;
+  --vp-code-link-color: #f93;
+  --vp-code-link-hover-color: #f93;
+  --vp-c-brand-1: #f93;
+  --vp-c-brand-2: #f93;
 
   .vp-doc a {
     text-decoration: none;
