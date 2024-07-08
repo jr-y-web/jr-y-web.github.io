@@ -74,7 +74,8 @@ export const webSkill: Array<TypeRouter> = [
             { text: 'Css has选择器', link: '/web/skill/cssHas.md' },
             { text: 'Echarts 绘制特殊的圆环图', link: '/web/skill/ringEchartsSkill.md' },
             { text: '快速学会YAML', link: '/web/skill/yaml.md' },
-            { text: '一个“夸张”的表格内嵌层级下拉选择需求', link: '/web/skill/exaggerateTableInSelect.md' }
+            { text: '一个“夸张”的表格内嵌层级下拉选择需求', link: '/web/skill/exaggerateTableInSelect.md' },
+            { text: '前端伪 Mvc 架构与脚手架生成模版', link: '/web/skill/quickTemplate.md' }
         ]
     }
 
