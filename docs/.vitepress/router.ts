@@ -86,7 +86,8 @@ export const interest: Array<TypeRouter> = [
     {
         text: 'No Game NO Life',
         items: [
-            { link: '/interest/cyberpunk.md', text: '赛博朋克2077' }
+            { link: '/interest/cyberpunk.md', text: '赛博朋克2077' },
+            { link: '/interest/rw2.md', text: '仁王2' }
         ]
     },
     {
