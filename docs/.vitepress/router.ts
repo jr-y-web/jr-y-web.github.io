@@ -75,7 +75,8 @@ export const webSkill: Array<TypeRouter> = [
             { text: 'Echarts 绘制特殊的圆环图', link: '/web/skill/ringEchartsSkill.md' },
             { text: '快速学会YAML', link: '/web/skill/yaml.md' },
             { text: '一个“夸张”的表格内嵌层级下拉选择需求', link: '/web/skill/exaggerateTableInSelect.md' },
-            { text: '前端伪 Mvc 架构与脚手架生成模版', link: '/web/skill/quickTemplate.md' }
+            { text: '前端伪 Mvc 架构与脚手架生成模版', link: '/web/skill/quickTemplate.md' },
+            { text: 'TypeScript 结构化类型系统与实现模拟标称类型系统', link: '/web/skill/tsStructuredTypeSystem.md' }
         ]
     }
 
