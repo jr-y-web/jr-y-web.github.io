@@ -68,6 +68,12 @@ export const webSkill: Array<TypeRouter> = [
         ]
     },
     {
+        text: '知识巩固',
+        items: [
+            { text: 'Promise 全解', link: '/web/skill/promise.md' }
+        ]
+    },
+    {
         text: "工作中的骚解法",
         items: [
             { text: 'visibilitystate 检测页面是否处于焦点状态', link: '/web/skill/visibilitystate.md' },
@@ -78,7 +84,7 @@ export const webSkill: Array<TypeRouter> = [
             { text: '前端伪 Mvc 架构与脚手架生成模版', link: '/web/skill/quickTemplate.md' },
             { text: 'TypeScript 结构化类型系统与实现模拟标称类型系统', link: '/web/skill/tsStructuredTypeSystem.md' }
         ]
-    }
+    },
 
 ]
 
@@ -131,7 +137,7 @@ export const vueTestUtile: Array<TypeRouter> = [
             { text: '表单交互', link: '/docsTranslate/vueTestUtile/formHandling.md' },
             { text: '向组件传递数据', link: '/docsTranslate/vueTestUtile/passingDataToComponents.md' },
             { text: '编写易于测试的组件', link: '/docsTranslate/vueTestUtile/easyToTest.md' },
-            { text: '发送HTTP请求', link: '/docsTranslate/vueTestUtile/httpRequests.md' }
+            { text: '发送HTTP请求', link: '/docsTranslate/vueTestUtile/httpRequests.md' },
 
         ]
     },
