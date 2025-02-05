@@ -15,6 +15,7 @@ interface TypeRouter {
     activeMatch?: string
 }
 
+
 // node.js
 export const nodejs: Array<TypeRouter> = [
     {
@@ -65,6 +66,14 @@ export const webSkill: Array<TypeRouter> = [
         items: [
             { text: '手摸手 带你入门且部署VitePress', link: '/web/skill/vitepress.md' },
             { text: '我必须立马评论！为 VitePress 添加评论功能', link: '/web/skill/vitepressGitalk.md' },
+        ]
+    },
+    {
+        text: 'TypeScript 巡礼',
+        items: [
+            { text: '温习基础', link: '/web/skill/typeBascic.md' },
+            { text: '泛型全解', link: '/web/skill/generics.md' },
+            { text: 'TypeScript 内置类型工具函数', link: '/web/skill/tsTypeTool.md' }
         ]
     },
     {

@@ -1,0 +1,4 @@
+{
+  "debug.showVariableTypes": true,
+  "typescript.inlayHints.parameterNames.enabled": "none"
+}
