@@ -109,7 +109,8 @@ export const interest: Array<TypeRouter> = [
     {
         text: '电影',
         items: [
-            { link: '/interest/dansIaMaison.md', text: '《登堂入室》' }
+            { link: '/interest/dansIaMaison.md', text: '《登堂入室》' },
+            {link: '/interest/zfby.md', text: '《追风捕影》'}
         ]
     }
 ]
@@ -199,10 +200,10 @@ const navItem = {
         text: '关于作者',
         router: about
     },
-    interview: {
-        router: interview,
-        text: '面试题挑战'
-    },
+    // interview: {
+    //     router: interview,
+    //     text: '面试题挑战'
+    // },
     interest: {
         router: interest,
         text: '兴趣爱好'
@@ -310,4 +311,3 @@ export const sidebar = {
     // vue test utile 翻译
     '/docsTranslate/vueTestUtile': vueTestUtile
 }
-
